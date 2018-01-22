@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+	<h:head>
+	</h:head>
+	<h:body>
+		<h1>CRUD</h1>
+		<h:panelGroup rendered="#{empty viewManager.cacheList}">
+			<p>¡No hay datos aún!</p>
+		</h:panelGroup>
+		<h:panelGroup rendered="#{!viewManager.edit}">
+			<h3>Alta de Datos</h3>
+			<h:form>
+				<p>Key:
+					<p:inputText value="#{viewManager.item.key}" />
+				</p>
+				<p>Value:
+					<p:inputText value="#{viewManager.item.value}" />
+				</p>
+				<p>
+					<p:commandButton value="Añadir" actionListener="#{viewManager.add}" ajax="false" />
+				</p>
+			</h:form>
+		</h:panelGroup>
+		<h:panelGroup rendered="#{viewManager.edit}">
+			<h3>Editar un item #{viewManager.item.key}</h3>
+			<h:form>
+				<p>Key:
+					<p:inputText value="#{viewManager.item.key}" />
+				</p>
+				<p>Value:
+					<p:inputText value="#{viewManager.item.value}" />
+				</p>
+				<p>
+					<p:commandButton value="Guardar" action="#{viewManager.save}" ajax="false" />
+				</p>
+			</h:form>
+		</h:panelGroup>
+			<h:form rendered="#{not empty viewManager.cacheList}">
+			</h:form>
+			<h:form rendered="#{not empty viewManager.cacheList}">
+				<h:dataTable value="#{viewManager.cacheList}" var="item">
+					<h:column>
+						<f:facet name="header">Key</f:facet>
+						<h:outputText value="#{item.key}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">Value</f:facet>
+						<h:outputText value="#{item.value}" />
+					</h:column>
+					<h:column>
+						<p:commandButton value="Editar" action="#{viewManager.edit(item)}" ajax="false" />
+					</h:column>
+					<h:column>
+						<p:commandButton value="Eliminar" action="#{viewManager.delete(item)}" ajax="false" />
+					</h:column>
+				</h:dataTable>
+			</h:form>		
+	</h:body>
+</html>
